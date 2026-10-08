@@ -230,6 +230,7 @@
       *,*::before,*::after { scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important; }
       .reveal { opacity:1;transform:none; }
     }
+    
   </style>
 </head>
 <body>
@@ -341,18 +342,80 @@
   </div>
 </section>
 
+<style>
+  .supporters-grid {
+    display: grid;
+    grid-template-columns: 1.15fr 1fr 1fr;
+    gap: 16px;
+    align-items: stretch;
+  }
+
+  .supporter-card {
+    padding: 25px;
+    min-height: 205px;
+  }
+
+  .supporter-card--principal {
+    position: relative;
+    overflow: hidden;
+    border-color: rgba(101, 214, 196, .45);
+    background:
+      radial-gradient(ellipse at 90% 0%, rgba(101, 214, 196, .15), transparent 55%),
+      linear-gradient(145deg, rgba(25, 55, 57, .9), rgba(13, 30, 35, .88));
+    box-shadow: 0 18px 48px rgba(0, 0, 0, .2), 0 0 28px rgba(101, 214, 196, .08);
+  }
+
+  .supporter-card--principal::after {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, #65d6c4, #b1fff1, transparent);
+  }
+
+  .supporter-badge {
+    display: inline-flex;
+    margin-bottom: 13px;
+    padding: 5px 10px;
+    border: 1px solid rgba(101, 214, 196, .28);
+    border-radius: 99px;
+    color: #9beadd;
+    background: rgba(101, 214, 196, .09);
+    font-size: .76rem;
+  }
+
+  @media (max-width: 760px) {
+    .supporters-grid { grid-template-columns: 1fr; }
+  }
+</style>
 <section class="section" id="thanks">
   <div class="wrap">
     <div class="section-head reveal">
       <span class="kicker">امتنان وتقدير</span>
-      <h2 class="section-title">شكر خاص</h2>
+      <h2 class="section-title">الداعمون الأوائل للمشروع</h2>
       <p class="section-desc">كل مشروع ناجح يقف خلفه أشخاص آمنوا بالفكرة قبل أن تصبح واقعًا.</p>
     </div>
-    <div class="people-grid">
-      <article class="card person-card reveal"><div class="person-mark">ر</div><h3>الأستاذ رياض أبو النجا</h3><p>تقديرًا لدعمه وتشجيعه واهتمامه بالمشروع.</p></article>
-      <article class="card person-card reveal delay-1"><div class="person-mark">م</div><h3>الأستاذ محمد الأعرج</h3><p>تقديرًا لدعمه ومساندته وتشجيعه المستمر.</p></article>
-      <article class="card person-card reveal delay-2"><div class="person-mark">إ</div><h3>الأستاذ إبراهيم أبو حماد</h3><p>تقديرًا لدعمه وثقته بالفكرة وتشجيعه على تطوير المشروع.</p></article>
-    </div>
+<div class="people-grid supporters-grid">
+  <article class="card person-card supporter-card supporter-card--principal reveal">
+    <div class="person-mark">ر</div>
+    <span class="supporter-badge">مدير المدرسة</span>
+    <h3>الأستاذ رياض أبو النجا</h3>
+    <p>تقديرًا لدعمه وتشجيعه واهتمامه بالمشروع.</p>
+  </article>
+
+  <article class="card person-card supporter-card reveal delay-1">
+    <div class="person-mark">م</div>
+    <h3>الأستاذ محمد الأعرج</h3>
+    <p>تقديرًا لدعمه ومساندته وتشجيعه المستمر.</p>
+  </article>
+
+  <article class="card person-card supporter-card reveal delay-2">
+    <div class="person-mark">إ</div>
+    <h3>الأستاذ إبراهيم أبو حماد</h3>
+    <p>تقديرًا لدعمه وثقته بالفكرة وتشجيعه على تطوير المشروع.</p>
+  </article>
+</div>
+
   </div>
 </section>
 
