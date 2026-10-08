@@ -1,0 +1,449 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#09111f">
+  <meta name="description" content="فهيم — مساعد ذكي للطلاب في مدرسة خريبة السوق الثانوية الثانية للبنين.">
+  <title>فهيم — مساعدك الذكي للتعلّم</title>
+  <link rel="icon" type="image/png" href="logo.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #0d1416;
+      --surface: rgba(18, 31, 51, .74);
+      --surface-solid: #111e32;
+      --text: #f4f7fc;
+      --muted: #a6b4c8;
+      --line: rgba(188, 208, 235, .13);
+      --cyan: #65d6c4;
+      --blue: #8daaff;
+      --violet: #b0a0ff;
+      --radius: 24px;
+      --max: 1160px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 86px; }
+    body {
+      margin: 0;
+      color: var(--text);
+      background:
+        radial-gradient(ellipse at 80% 5%, rgba(84, 110, 211, .16), transparent 35rem),
+        radial-gradient(ellipse at 10% 35%, rgba(45, 179, 174, .09), transparent 34rem),
+        var(--bg);
+      font-family: "IBM Plex Sans Arabic", system-ui, sans-serif;
+      line-height: 1.8;
+      overflow-x: hidden;
+    }
+    a { color: inherit; text-decoration: none; }
+    button, a { -webkit-tap-highlight-color: transparent; }
+    .wrap { width: min(var(--max), calc(100% - 44px)); margin-inline: auto; }
+    .nav {
+      position: sticky; top: 0; z-index: 20;
+      background: rgba(9,17,31,.72);
+      border-bottom: 1px solid rgba(188,208,235,.08);
+      backdrop-filter: blur(18px);
+    }
+    .nav-inner { min-height: 72px; display:flex; align-items:center; justify-content:space-between; gap:22px; }
+    .brand { display:flex; align-items:center; gap:11px; font-size:1.13rem; font-weight:700; }
+    .brand-mark {
+      width: 38px; height:38px; display:grid; place-items:center; border-radius:13px;
+      color:#07131f; background:linear-gradient(135deg,var(--cyan),#9ab9ff);
+      box-shadow:0 0 28px rgba(113,224,220,.2); font-weight:700;
+    }
+    .nav-links { display:flex; align-items:center; gap:25px; color:var(--muted); font-size:.9rem; }
+    .nav-links a:hover { color:var(--text); }
+    .button {
+      display:inline-flex; align-items:center; justify-content:center; gap:9px;
+      min-height:48px; padding:0 21px; border:1px solid transparent; border-radius:15px;
+      font:inherit; font-size:.93rem; font-weight:600; cursor:pointer;
+      transition:transform .22s ease, box-shadow .22s ease, background .22s ease, border-color .22s ease;
+    }
+    .button:hover { transform:translateY(-3px); }
+    .button-primary { color:#07131c; background:linear-gradient(120deg,var(--cyan),#a8c6ff); box-shadow:0 10px 32px rgba(82,202,201,.17); }
+    .button-primary:hover { box-shadow:0 14px 38px rgba(82,202,201,.27); }
+    .button-ghost { border-color:var(--line); background:rgba(255,255,255,.035); color:var(--text); }
+    .button-ghost:hover { border-color:rgba(113,224,220,.42); background:rgba(255,255,255,.07); }
+    .hero { position:relative; min-height:690px; display:grid; align-items:center; padding:82px 0 100px; isolation:isolate; }
+    .hero::before, .hero::after {
+      content:""; position:absolute; z-index:-1; border-radius:50%; filter:blur(1px); pointer-events:none;
+    }
+    .hero::before { width:360px;height:360px;left:5%;top:14%;background:radial-gradient(circle,rgba(96,131,255,.16),transparent 70%); }
+    .hero::after { width:300px;height:300px;right:32%;bottom:5%;background:radial-gradient(circle,rgba(69,221,206,.1),transparent 70%); }
+    .hero-grid { display:grid; grid-template-columns:1.06fr .94fr; gap:50px; align-items:center; }
+    .eyebrow {
+      display:inline-flex; align-items:center; gap:9px; padding:7px 13px; border:1px solid var(--line);
+      border-radius:99px; background:rgba(255,255,255,.035); color:#c6d5e9; font-size:.82rem;
+    }
+    .live-dot { width:7px;height:7px;border-radius:50%;background:var(--cyan);box-shadow:0 0 12px var(--cyan); }
+    h1 { margin:22px 0 8px; font-size:clamp(4.3rem,10vw,8.5rem); line-height:1; letter-spacing:-.06em; }
+    .hero h2 { margin:18px 0 14px; max-width:650px; font-size:clamp(1.5rem,3.5vw,2.55rem); line-height:1.45; }
+    .gradient-text { background:linear-gradient(105deg,#fff 15%,#9be8e3 58%,#b4c2ff); color:transparent; -webkit-background-clip:text; background-clip:text; }
+    .hero-copy { max-width:590px; color:var(--muted); font-size:1.08rem; }
+    .hero-actions { display:flex; flex-wrap:wrap; gap:12px; margin-top:28px; }
+    .hero-note { margin-top:23px; color:#8192a9; font-size:.82rem; }
+    .visual { position:relative; min-height:420px; display:grid; place-items:center; }
+    .orbit { position:absolute; width:min(390px,90vw); aspect-ratio:1; border:1px solid rgba(154,190,224,.13); border-radius:50%; animation:rotate 34s linear infinite; }
+    .orbit::before,.orbit::after { content:""; position:absolute; width:8px;height:8px;border-radius:50%;background:var(--cyan);box-shadow:0 0 18px var(--cyan); }
+    .orbit::before { top:14%;right:19%; }
+    .orbit::after { bottom:15%;left:13%;background:var(--violet);box-shadow:0 0 18px var(--violet); }
+    .orbit.orbit-two { width:min(300px,72vw); border-style:dashed; animation-direction:reverse; animation-duration:48s; }
+    .orbit.orbit-two::before { top:49%;right:-4px;background:var(--blue);box-shadow:0 0 18px var(--blue); }
+    .ai-card {
+      position:relative; width:min(330px,82vw); padding:25px; border:1px solid rgba(191,219,246,.17);
+      border-radius:28px; background:linear-gradient(145deg,rgba(29,48,74,.83),rgba(13,25,42,.76));
+      box-shadow:0 30px 90px rgba(0,0,0,.32),inset 0 1px rgba(255,255,255,.07);
+      backdrop-filter:blur(18px); animation:float 6s ease-in-out infinite;
+    }
+    .ai-card-head { display:flex; justify-content:space-between; align-items:center; margin-bottom:23px; }
+    .ai-label { color:#d6e2f2; font-weight:600; }
+    .ai-status { color:var(--cyan); font-size:.75rem; }
+    .bubble { padding:12px 15px; border-radius:16px; font-size:.88rem; }
+    .bubble-user { margin-right:35px; background:rgba(132,161,255,.13); color:#e5ebff; border:1px solid rgba(132,161,255,.12); }
+    .bubble-ai { margin-top:13px; margin-left:24px; background:rgba(113,224,220,.09); border:1px solid rgba(113,224,220,.13); color:#e0f4f3; }
+    .typing { display:flex; gap:5px; margin-top:18px; }
+    .typing i { width:5px;height:5px;border-radius:50%;background:#8ce2dc;animation:dots 1.1s infinite ease-in-out; }
+    .typing i:nth-child(2){animation-delay:.15s}.typing i:nth-child(3){animation-delay:.3s}
+    .float-tag { position:absolute; padding:8px 12px; border:1px solid var(--line); border-radius:13px; color:#dce7f5; background:rgba(17,30,50,.78); backdrop-filter:blur(12px); font-size:.78rem; box-shadow:0 10px 35px rgba(0,0,0,.18); z-index: 3; }
+    .tag-one { top:14%; right:1%; animation:float 5s ease-in-out infinite; }
+    .tag-two { left:-1%; bottom:17%; animation:float 7s ease-in-out infinite reverse; }
+    .section { padding:100px 0; }
+    .section-head { max-width:700px; margin-bottom:38px; }
+    .kicker { color:var(--cyan); font-size:.83rem; font-weight:600; letter-spacing:.04em; }
+    h2.section-title { margin:8px 0 12px; font-size:clamp(2rem,4.4vw,3.2rem); line-height:1.3; }
+    .section-desc { margin:0; color:var(--muted); }
+    .feature-grid { display:grid; grid-template-columns:repeat(5,1fr); gap:14px; }
+    .card {
+      border:1px solid var(--line); border-radius:var(--radius);
+      background:linear-gradient(145deg,rgba(22,39,62,.72),rgba(13,24,40,.67));
+      box-shadow:0 16px 42px rgba(0,0,0,.12);
+      transition:transform .25s ease,border-color .25s ease,box-shadow .25s ease;
+    }
+    .card:hover { transform:translateY(-6px); border-color:rgba(113,224,220,.35); box-shadow:0 22px 55px rgba(0,0,0,.22),0 0 30px rgba(113,224,220,.045); }
+    .feature-card { min-height:180px; padding:22px 18px; }
+    .icon-box { width:46px;height:46px; display:grid;place-items:center;border-radius:15px; margin-bottom:18px; color:var(--cyan); background:rgba(113,224,220,.1); border:1px solid rgba(113,224,220,.12); font-size:1.25rem; }
+    .feature-card h3,.person-card h3 { margin:0 0 5px; font-size:1.03rem; }
+    .feature-card p,.person-card p { margin:0; color:var(--muted); font-size:.86rem; }
+    .story { display:grid; grid-template-columns:.88fr 1.12fr; gap:45px; align-items:start; }
+    .story-quote { position:sticky; top:115px; padding:30px; border-radius:28px; border:1px solid rgba(113,224,220,.18); background:linear-gradient(145deg,rgba(40,91,101,.22),rgba(23,34,60,.58)); }
+    .story-quote blockquote { margin:14px 0 0; font-size:clamp(1.4rem,3vw,2rem); line-height:1.55; font-weight:600; }
+    .story-list { display:grid; gap:12px; }
+    .story-item { display:flex;align-items:center;gap:16px;padding:18px 20px; }
+    .check { flex:0 0 34px; width:34px;height:34px;display:grid;place-items:center;border-radius:50%;background:rgba(113,224,220,.1);color:var(--cyan); }
+    .story-item p { margin:0; font-weight:500; }
+    .staff-card { position:relative; overflow:hidden; display:grid; grid-template-columns:1.05fr .95fr; gap:25px; padding:20px; border-radius:32px; border:1px solid rgba(177,204,237,.17); background:linear-gradient(130deg,rgba(21,37,60,.87),rgba(13,23,39,.78)); box-shadow:0 28px 80px rgba(0,0,0,.25); }
+    .staff-photo {
+      min-height:360px; display:grid; place-items:center; position:relative; overflow:hidden;
+      border-radius:24px; border:1px solid rgba(113,224,220,.22);
+      background:radial-gradient(ellipse at center,rgba(113,224,220,.12),transparent 58%),linear-gradient(145deg,#152942,#101a2c);
+      box-shadow:inset 0 0 45px rgba(113,224,220,.06),0 0 32px rgba(113,224,220,.06);
+    }
+    .photo-placeholder { text-align:center; color:#c9d7e8; padding:20px; }
+    .photo-placeholder .icon-box { margin:0 auto 15px; }
+    .photo-placeholder small { display:block; color:#8699b1; margin-top:5px; }
+    .staff-content { display:flex;flex-direction:column;justify-content:center;padding:22px; }
+    .quote-badge { display:inline-flex;align-self:flex-start;padding:7px 12px;border-radius:99px;background:rgba(177,160,255,.12);border:1px solid rgba(177,160,255,.18);color:#d4caff;font-size:.78rem; }
+    .staff-content h3 { font-size:1.7rem;line-height:1.45;margin:17px 0 6px; }
+    .staff-content p { color:var(--muted);margin:0; }
+    .testimonial { margin-top:22px;padding:18px 20px;border-right:2px solid var(--cyan);border-radius:14px;background:rgba(255,255,255,.035);color:#e5edf7; }
+    .testimonial small { display:block;margin-top:9px;color:#99a9bf;font-size:.75rem; }
+    .people-grid { display:grid;grid-template-columns:repeat(3,1fr);gap:16px; }
+    .person-card { padding:25px;min-height:190px; }
+    .person-mark { width:48px;height:48px;display:grid;place-items:center;margin-bottom:18px;border-radius:16px;background:linear-gradient(145deg,rgba(141,170,255,.16),rgba(113,224,220,.1));color:#c4d5ff;font-weight:700; }
+    .developer { display:grid;grid-template-columns:auto 1fr;gap:26px;align-items:center;padding:34px;border:1px solid rgba(141,170,255,.18);border-radius:30px;background:radial-gradient(ellipse at 8% 20%,rgba(141,170,255,.11),transparent 45%),linear-gradient(140deg,rgba(23,38,61,.83),rgba(13,23,39,.76)); }
+    .dev-avatar { width:110px;height:110px;display:grid;place-items:center;border-radius:32px;background:linear-gradient(145deg,#76ded8,#91a8ff);color:#08131e;font-size:2rem;font-weight:700;box-shadow:0 15px 45px rgba(113,224,220,.15); }
+    .developer h3 { margin:0;font-size:1.75rem; }
+    .role { color:var(--cyan);font-size:.9rem; }
+    .developer p { color:var(--muted);max-width:720px;margin:8px 0 16px; }
+    .chips { display:flex;flex-wrap:wrap;gap:8px; }
+    .chip { padding:6px 11px;border:1px solid var(--line);border-radius:99px;color:#c5d1e2;font-size:.75rem;background:rgba(255,255,255,.025); }
+    .timeline { display:grid;grid-template-columns:repeat(5,1fr);gap:12px;position:relative; }
+    .timeline::before { content:"";position:absolute;top:21px;right:10%;left:10%;height:1px;background:linear-gradient(90deg,transparent,var(--cyan),var(--blue),transparent);opacity:.55; }
+    .phase { position:relative;text-align:center;padding:0 8px; }
+    .phase-dot { position:relative;z-index:1;width:43px;height:43px;margin:0 auto 16px;display:grid;place-items:center;border:1px solid rgba(113,224,220,.35);border-radius:50%;background:#101d30;color:var(--cyan);box-shadow:0 0 25px rgba(113,224,220,.1); }
+    .phase h3 { margin:0;font-size:.97rem; }
+    .phase p { margin:4px 0 0;color:var(--muted);font-size:.78rem; }
+    .capability-grid { display:grid;grid-template-columns:repeat(4,1fr);gap:14px; }
+    .capability { padding:20px;min-height:142px; }
+    .capability .icon-box { width:40px;height:40px;margin-bottom:13px;font-size:1rem; }
+    .capability h3 { margin:0;font-size:.93rem; }
+    .cta { position:relative;overflow:hidden;text-align:center;padding:62px 25px;border:1px solid rgba(113,224,220,.2);border-radius:32px;background:radial-gradient(ellipse at 50% 120%,rgba(90,180,190,.17),transparent 60%),linear-gradient(140deg,rgba(28,48,74,.82),rgba(13,24,40,.8)); }
+    .cta h2 { margin:0 0 8px;font-size:clamp(2rem,5vw,3.4rem); }
+    .cta p { color:var(--muted);margin:0 0 24px; }
+    footer { padding:33px 0 38px;border-top:1px solid rgba(188,208,235,.08); }
+    .footer-inner { display:flex;align-items:center;justify-content:space-between;gap:18px; }
+    .footer-brand { font-weight:700;font-size:1.1rem; }
+    .footer-sub,.footer-credit { color:var(--muted);font-size:.81rem; }
+    .reveal { opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.7,.2,1); }
+    .reveal.visible { opacity:1;transform:translateY(0); }
+    .delay-1 { transition-delay:.08s; }.delay-2 { transition-delay:.16s; }.delay-3 { transition-delay:.24s; }.delay-4 { transition-delay:.32s; }
+    @keyframes rotate { to { transform:rotate(360deg); } }
+    @keyframes float { 0%,100% { transform:translateY(0); } 50% { transform:translateY(-9px); } }
+    @keyframes dots { 0%,80%,100% { opacity:.35;transform:translateY(0); } 40% { opacity:1;transform:translateY(-4px); } }
+    @media (max-width:900px) {
+      .hero-grid { grid-template-columns:1fr;gap:20px; }
+      .hero { min-height:unset;padding:75px 0 55px; }
+      .visual { min-height:360px; }
+      .feature-grid { grid-template-columns:repeat(3,1fr); }
+      .story { grid-template-columns:1fr; }
+      .story-quote { position:relative;top:auto; }
+      .staff-card { grid-template-columns:1fr; }
+      .staff-photo { min-height:300px; }
+      .capability-grid { grid-template-columns:repeat(2,1fr); }
+    }
+    @media (max-width:620px) {
+      .wrap { width:min(100% - 30px,var(--max)); }
+      .nav-inner { min-height:64px; }
+      .nav-links { display:none; }
+      .nav .button { min-height:41px;padding:0 13px;font-size:.82rem; }
+      .hero { padding-top:57px; }
+      h1 { font-size:5rem; }
+      .hero-copy { font-size:.98rem; }
+      .visual { min-height:320px; }
+      .orbit { width:290px; }.orbit.orbit-two { width:225px; }
+      .ai-card { width:290px;padding:21px; }
+      .tag-one { right:0;top:6%; }.tag-two { left:0;bottom:8%; }
+      .section { padding:72px 0; }
+      .feature-grid { grid-template-columns:repeat(2,1fr);gap:10px; }
+      .feature-card { min-height:157px;padding:17px 14px; }
+      .people-grid { grid-template-columns:1fr; }
+      .person-card { min-height:unset; }
+      .developer { grid-template-columns:1fr;padding:24px; }
+      .dev-avatar { width:78px;height:78px;border-radius:24px;font-size:1.5rem; }
+      .timeline { grid-template-columns:1fr;gap:0; }
+      .timeline::before { top:18px;bottom:22px;right:21px;left:auto;width:1px;height:auto; }
+      .phase { display:grid;grid-template-columns:43px 1fr;text-align:right;gap:0 14px;padding:0 0 20px; }
+      .phase-dot { grid-row:span 2;margin:0; }
+      .phase h3 { align-self:end; }
+      .phase p { align-self:start; }
+      .staff-content { padding:12px 7px 8px; }
+      .staff-photo { min-height:250px; }
+      .cta { padding:48px 18px; }
+      .footer-inner { align-items:flex-start;flex-direction:column; }
+      .capability-grid { gap:10px; }
+      .capability { padding:16px;min-height:132px; }
+    }
+    @media (prefers-reduced-motion:reduce) {
+      *,*::before,*::after { scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important; }
+      .reveal { opacity:1;transform:none; }
+    }
+  </style>
+</head>
+<body>
+<header class="nav">
+  <div class="wrap nav-inner">
+    <a class="brand" href="#home" aria-label="فهيم — الصفحة الرئيسية">
+      <img src="logo.svg" alt="" class="brand-logo">
+      <span>فهيم</span>
+    </a>
+<nav class="nav-links" aria-label="التنقل الرئيسي">
+  <a href="#about">عن فهيم</a>
+  <a href="#staff">الكادر التعليمي</a>
+  <a href="#developer">المطور</a>
+  <a href="#features">المميزات</a>
+</nav>
+
+<a class="button button-primary"
+   href="https://chat-boot-d9hz.onrender.com"
+   target="_blank"
+   rel="noopener noreferrer">
+  جرّب فهيم <span aria-hidden="true">↗</span>
+</a>
+
+  </div>
+</header>
+  <main>
+    <section class="hero" id="home">
+      <div class="wrap hero-grid">
+        <div class="reveal visible">
+          <span class="eyebrow"><span class="live-dot"></span> مشروع تعليمي تقني · مدرسة خريبة السوق الثانوية الثانية للبنين</span>
+          <h1 class="gradient-text">فهيم</h1>
+          <h2>مساعدك الذكي للتعلّم، الفهم، وحل مشاكل الطلبة</h2>
+          <p class="hero-copy">فهيم هو مساعد ذكي تعليمي صُمم ليكون مع الطالب عندما يحتاج إلى شرح، مساعدة، توجيه أو حل مشكلة دراسية.</p>
+          <div class="hero-actions">
+            <a class="button button-primary" href="https://chat-boot-d9hz.onrender.com" target="_blank" rel="noopener noreferrer">جرّب فهيم الآن <span aria-hidden="true">↗</span></a>
+            <a class="button button-ghost" href="#about">تعرّف على المشروع <span aria-hidden="true">↓</span></a>
+          </div>
+          <p class="hero-note">تقنية أقرب إلى الطالب، وتجربة صُممت لدعم رحلة التعلّم.</p>
+        </div>
+        <div class="visual reveal delay-2" aria-hidden="true">
+          <div class="orbit"></div><div class="orbit orbit-two"></div>
+          <div class="float-tag tag-one">✦ تعلّم بوضوح</div>
+          <div class="float-tag tag-two">مساعدة عند الحاجة</div>
+          <div class="ai-card">
+            <div class="ai-card-head"><span class="ai-label">فهيم · مساعدك الذكي</span><span class="ai-status">● جاهز للمساعدة</span></div>
+            <div class="bubble bubble-user">ممكن تشرح لي الفكرة بطريقة أبسط؟</div>
+            <div class="bubble bubble-ai">بالتأكيد! دعنا نقسمها إلى خطوات صغيرة وواضحة…</div>
+            <div class="typing"><i></i><i></i><i></i></div>
+          </div>
+        </div>
+      </div>
+    </section>
+<section class="section" id="about">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="kicker">تعرّف إلى المشروع</span>
+      <h2 class="section-title">من هو فهيم؟</h2>
+      <p class="section-desc">فهيم هو مساعد ذكي تعليمي يهدف إلى مساعدة الطلبة في رحلتهم التعليمية، من خلال تقديم الشرح والإجابة عن الأسئلة ومساعدة الطالب على فهم ما يصعب عليه بطريقة بسيطة وواضحة.</p>
+    </div>
+    <div class="feature-grid">
+      <article class="card feature-card reveal"><div class="icon-box">✦</div><h3>شرح وتبسيط</h3><p>تقريب الأفكار الصعبة بأسلوب واضح.</p></article>
+      <article class="card feature-card reveal delay-1"><div class="icon-box">▤</div><h3>مساعدة دراسية</h3><p>مساندة الطالب في رحلته التعليمية.</p></article>
+      <article class="card feature-card reveal delay-2"><div class="icon-box">؟</div><h3>إجابة عن الأسئلة</h3><p>التفاعل مع الأسئلة التعليمية.</p></article>
+      <article class="card feature-card reveal delay-3"><div class="icon-box">♡</div><h3>دعم الطالب</h3><p>تجربة تراعي احتياجات الطلبة.</p></article>
+      <article class="card feature-card reveal delay-4"><div class="icon-box">◷</div><h3>متاح عند الحاجة</h3><p>مساعدة حين يحتاج الطالب إليها.</p></article>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap story">
+    <div class="story-quote reveal">
+      <span class="kicker">لماذا فهيم؟</span>
+      <blockquote>لأن كل طالب يستحق أن يجد من يساعده عندما يتوقف عند سؤال.</blockquote>
+    </div>
+    <div class="story-list">
+      <article class="card story-item reveal"><span class="check">✓</span><p>يفهم سؤال الطالب.</p></article>
+      <article class="card story-item reveal delay-1"><span class="check">✓</span><p>يشرح بطريقة مبسطة.</p></article>
+      <article class="card story-item reveal delay-2"><span class="check">✓</span><p>يساعد الطالب على الوصول إلى الفكرة.</p></article>
+      <article class="card story-item reveal delay-3"><span class="check">✓</span><p>يوفر تجربة تفاعلية.</p></article>
+      <article class="card story-item reveal delay-4"><span class="check">✓</span><p>صُمم ليكون قريبًا من احتياجات الطلبة.</p></article>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="staff">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="kicker">شركاء الرحلة</span>
+      <h2 class="section-title">بدعم من الكادر التعليمي</h2>
+      <p class="section-desc">تقدير لكل من شجّع على أن تكون التقنية في خدمة تعلّم الطالب.</p>
+    </div>
+    <div class="staff-card reveal">
+      <div class="staff-photo" role="img" aria-label="مساحة مخصصة لصورة الكادر التعليمي">
+        <div class="photo-placeholder">
+          <img src="images.jpg" alt="">
+        </div>
+      </div>
+      <div class="staff-content">
+        <span class="quote-badge">✦ رسالة دعم للمشروع</span>
+        <h3>معًا نحو تعلّم أقرب إلى المستقبل</h3>
+        <p>هذا المشروع لم يكن ليصل إلى هذه الصورة لولا الدعم والتشجيع والثقة التي قدمها الكادر التعليمي.</p>
+        <div class="testimonial">
+          “نؤمن بأن التقنية عندما تُسخّر لخدمة الطالب، يمكن أن تصنع فرقًا حقيقيًا في التعليم.”
+          <small>رسالة تعبّر عن روح الدعم للمشروع، وليست اقتباسًا حرفيًا من شخص بعينه.</small>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="thanks">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="kicker">امتنان وتقدير</span>
+      <h2 class="section-title">شكر خاص</h2>
+      <p class="section-desc">كل مشروع ناجح يقف خلفه أشخاص آمنوا بالفكرة قبل أن تصبح واقعًا.</p>
+    </div>
+    <div class="people-grid">
+      <article class="card person-card reveal"><div class="person-mark">ر</div><h3>الأستاذ رياض أبو النجا</h3><p>تقديرًا لدعمه وتشجيعه واهتمامه بالمشروع.</p></article>
+      <article class="card person-card reveal delay-1"><div class="person-mark">م</div><h3>الأستاذ محمد الأعرج</h3><p>تقديرًا لدعمه ومساندته وتشجيعه المستمر.</p></article>
+      <article class="card person-card reveal delay-2"><div class="person-mark">إ</div><h3>الأستاذ إبراهيم أبو حماد</h3><p>تقديرًا لدعمه وثقته بالفكرة وتشجيعه على تطوير المشروع.</p></article>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="developer">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="kicker">صاحب الفكرة والتنفيذ</span>
+      <h2 class="section-title">خلف فهيم</h2>
+    </div>
+    <article class="developer reveal">
+      <div class="dev-avatar" aria-hidden="true">ج</div>
+      <div>
+        <h3>جميل إسماعيل أبو حماد</h3>
+        <span class="role">المصمم والمطور</span>
+        <p>صمّم وطوّر فهيم بهدف بناء تجربة تعليمية تقنية تساعد الطلبة وتقرّب أدوات الذكاء الاصطناعي من حياتهم الدراسية.</p>
+        <div class="chips"><span class="chip">AI</span><span class="chip">Web Development</span><span class="chip">UI/UX</span><span class="chip">Education Technology</span></div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="kicker">من الفكرة إلى التجربة</span>
+      <h2 class="section-title">رحلة بناء فهيم</h2>
+    </div>
+    <div class="timeline">
+      <article class="phase reveal"><span class="phase-dot">01</span><h3>فكرة</h3><p>حاجة الطالب أولًا</p></article>
+      <article class="phase reveal delay-1"><span class="phase-dot">02</span><h3>تصميم</h3><p>تجربة واضحة وقريبة</p></article>
+      <article class="phase reveal delay-2"><span class="phase-dot">03</span><h3>تطوير</h3><p>تحويل الفكرة إلى أداة</p></article>
+      <article class="phase reveal delay-3"><span class="phase-dot">04</span><h3>اختبار</h3><p>تحسين التجربة</p></article>
+      <article class="phase reveal delay-4"><span class="phase-dot">✦</span><h3>فهيم</h3><p>مساعد الطالب الذكي</p></article>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="features">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="kicker">مساعدة تعليمية تفاعلية</span>
+      <h2 class="section-title">ماذا يستطيع فهيم أن يفعل؟</h2>
+    </div>
+    <div class="capability-grid">
+      <article class="card capability reveal"><div class="icon-box">؟</div><h3>الإجابة عن الأسئلة</h3></article>
+      <article class="card capability reveal delay-1"><div class="icon-box">▤</div><h3>شرح الدروس</h3></article>
+      <article class="card capability reveal delay-2"><div class="icon-box">✦</div><h3>تبسيط المعلومات</h3></article>
+      <article class="card capability reveal delay-3"><div class="icon-box">⌘</div><h3>مساعدة الطالب في حل المشكلات</h3></article>
+      <article class="card capability reveal"><div class="icon-box">◌</div><h3>المحادثة الطبيعية</h3></article>
+      <article class="card capability reveal delay-1"><div class="icon-box">◎</div><h3>التعامل مع الأسئلة التعليمية</h3></article>
+      <article class="card capability reveal delay-2"><div class="icon-box">◷</div><h3>تقديم المساعدة في أي وقت</h3></article>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="cta reveal">
+      <span class="kicker">ابدأ رحلتك</span>
+      <h2>جاهز تجرب فهيم؟</h2>
+      <p>دع فهيم يساعدك في رحلتك التعليمية.</p>
+      <a class="button button-primary" href="https://chat-boot-d9hz.onrender.com" target="_blank" rel="noopener noreferrer">ابدأ استخدام فهيم <span aria-hidden="true">↗</span></a>
+    </div>
+  </div>
+</section>
+
+  </main>
+  <footer>
+    <div class="wrap footer-inner">
+      <div><div class="footer-brand">فهيم</div><div class="footer-sub">مساعد ذكي للطلاب</div></div>
+      <div class="footer-credit">صُمم وطُوّر بواسطة جميل إسماعيل أبو حماد<br>بدعم وتشجيع الكادر التعليمي</div>
+    </div>
+  </footer>
+  <script>
+    (() => {
+      const items = document.querySelectorAll(".reveal:not(.visible)");
+      const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      if (reduceMotion || !("IntersectionObserver" in window)) {
+        items.forEach(item => item.classList.add("visible"));
+        return;
+      }
+      const observer = new IntersectionObserver((entries, obs) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+            obs.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12, rootMargin: "0px 0px -35px 0px" });
+      items.forEach(item => observer.observe(item));
+    })();
+  </script>
+</body>
+</html>
