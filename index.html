@@ -69,6 +69,44 @@
     .mobile-menu { display:none; border-top:1px solid var(--line); background:rgba(10,12,16,.96); padding:16px 24px; flex-direction:column; gap:16px; }
     .mobile-menu.open { display:flex; }
 
+    /* ===== DOWNLOAD DROPDOWN ===== */
+    .dl-menu { position:relative; }
+    .nav-links .dl-trigger { display:inline-flex; align-items:center; gap:6px; cursor:pointer; }
+    .dl-chev { color:var(--olive); transition:transform .25s ease; }
+    .dl-menu.open .dl-trigger { color:var(--text); }
+    .dl-menu.open .dl-chev { transform:rotate(180deg); }
+    .dl-panel {
+      position:absolute; top:calc(100% + 16px); left:50%; width:300px; max-width:calc(100vw - 30px);
+      padding:16px; border:1px solid rgba(196,224,106,.22); border-radius:20px;
+      background:linear-gradient(145deg,rgba(22,25,17,.97),rgba(12,14,10,.97));
+      box-shadow:0 24px 60px rgba(0,0,0,.45),0 0 30px rgba(196,224,106,.06);
+      opacity:0; visibility:hidden; transform:translate(-50%,-8px);
+      transition:opacity .2s ease,transform .2s ease,visibility .2s;
+    }
+    .dl-menu.open .dl-panel { opacity:1; visibility:visible; transform:translate(-50%,0); }
+    .dl-panel::before {
+      content:""; position:absolute; top:-6px; left:50%; width:11px; height:11px; margin-left:-6px;
+      transform:rotate(45deg); background:#161911;
+      border-top:1px solid rgba(196,224,106,.22); border-left:1px solid rgba(196,224,106,.22);
+    }
+    .dl-kicker { display:block; margin:0 2px 12px; }
+    .nav-links .dl-item {
+      display:flex; align-items:center; gap:14px; padding:12px; color:var(--text); font-size:1rem;
+      border:1px solid var(--line); border-radius:14px; background:rgba(255,255,255,.03);
+      transition:transform .22s ease,border-color .22s ease,background .22s ease;
+    }
+    .nav-links .dl-item:hover { border-color:rgba(196,224,106,.45); background:rgba(196,224,106,.07); transform:translateY(-1px); }
+    .dl-ico {
+      flex:0 0 42px; width:42px; height:42px; display:grid; place-items:center; border-radius:12px;
+      color:#0a0c10; background:linear-gradient(120deg,var(--olive-bright),#a8c6ff);
+      box-shadow:0 8px 22px rgba(196,224,106,.18);
+    }
+    .dl-text { display:flex; flex-direction:column; line-height:1.45; }
+    .dl-text strong { font-family:var(--font-heading); font-size:.95rem; font-weight:600; }
+    .dl-text small { color:var(--muted); font-size:.76rem; }
+    .dl-note { margin:12px 2px 0; color:var(--muted); font-size:.76rem; line-height:1.65; }
+    .dl-trigger:focus-visible, .dl-item:focus-visible { outline:2px solid var(--olive); outline-offset:3px; border-radius:10px; }
+
     /* ===== BUTTONS ===== */
     .btn {
       display:inline-flex; align-items:center; justify-content:center; gap:.5rem;
@@ -263,6 +301,25 @@
       <a href="#staff">الكادر التعليمي</a>
       <a href="#developer">المطور</a>
       <a href="#features">المميزات</a>
+      <div class="dl-menu" id="dlMenu">
+        <a href="#" class="dl-trigger" id="dlTrigger" role="button" aria-haspopup="true" aria-expanded="false" aria-controls="dlPanel">
+          تنزيل
+          <svg class="dl-chev" viewBox="0 0 12 12" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 4.5l4 4 4-4"/></svg>
+        </a>
+        <div class="dl-panel" id="dlPanel" role="menu" aria-labelledby="dlTrigger">
+          <span class="kicker dl-kicker">// تطبيق أندرويد</span>
+          <a class="dl-item" role="menuitem" href="https://github.com/jameel-max/faheem-download-apk/releases/download/untagged-7c70b70baa4f3b482852/app-debug.apk" download rel="noopener">
+            <span class="dl-ico">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m0 0 5-5m-5 5-5-5M5 21h14"/></svg>
+            </span>
+            <span class="dl-text">
+              <strong>تحميل فهيم للأندرويد</strong>
+              <small id="dlSub">ملف APK · نسخة تجريبية</small>
+            </span>
+          </a>
+          <p class="dl-note">بعد التحميل، اسمح بالتثبيت من هذا المصدر عندما يطلب هاتفك ذلك.</p>
+        </div>
+      </div>
     </nav>
     <div style="display:flex;align-items:center;gap:12px;">
       <a class="btn btn-primary" href="https://chat-boot-d9hz.onrender.com" target="_blank" rel="noopener noreferrer">جرّب فهيم ↗</a>
@@ -274,6 +331,7 @@
     <a href="#staff" style="color:var(--muted);font-size:.9rem;">الكادر التعليمي</a>
     <a href="#developer" style="color:var(--muted);font-size:.9rem;">المطور</a>
     <a href="#features" style="color:var(--muted);font-size:.9rem;">المميزات</a>
+    <a href="https://github.com/jameel-max/faheem-download-apk/releases/download/untagged-7c70b70baa4f3b482852/app-debug.apk" download rel="noopener" style="color:var(--olive);font-size:.9rem;">⬇ تنزيل التطبيق (APK)</a>
     <a class="btn btn-primary" href="https://chat-boot-d9hz.onrender.com" target="_blank" rel="noopener noreferrer" style="width:100%;">جرّب فهيم ↗</a>
   </nav>
 </header>
@@ -505,6 +563,31 @@
       menu.classList.remove('open');
       btn.textContent = '☰';
     }));
+  })();
+
+  // Download dropdown
+  (() => {
+    const menu = document.getElementById('dlMenu');
+    const trigger = document.getElementById('dlTrigger');
+    const item = menu.querySelector('.dl-item');
+    const sub = document.getElementById('dlSub');
+    const setOpen = (open) => {
+      menu.classList.toggle('open', open);
+      trigger.setAttribute('aria-expanded', String(open));
+    };
+    trigger.addEventListener('click', (e) => {
+      e.preventDefault();
+      setOpen(!menu.classList.contains('open'));
+    });
+    document.addEventListener('click', (e) => { if (!menu.contains(e.target)) setOpen(false); });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && menu.classList.contains('open')) { setOpen(false); trigger.focus(); }
+    });
+    item.addEventListener('click', () => {
+      const old = sub.textContent;
+      sub.textContent = 'بدأ التحميل ✓';
+      setTimeout(() => { setOpen(false); sub.textContent = old; }, 1400);
+    });
   })();
 
   // Reveal on scroll
